@@ -2,9 +2,9 @@
 #include <iostream>
 #include <string>
 
-#include "arcade/app.hpp"
-#include "arcade/assets.hpp"
-#include "arcade/version.hpp"
+#include "../include/arcade/app.hpp"
+#include "../include/arcade/assets.hpp"
+#include "../cmake/version.hpp.in"
 
 namespace {
 

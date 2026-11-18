@@ -1,4 +1,4 @@
-#include "arcade/app.hpp"
+#include "include/arcade/app.hpp"
 
 #include <algorithm>
 #include <iostream>

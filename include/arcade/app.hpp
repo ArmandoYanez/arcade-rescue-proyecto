@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "arcade/game.hpp"
-#include "arcade/types.hpp"
+#include "game.hpp"
+#include "types.hpp"
 
 namespace arcade {
 
