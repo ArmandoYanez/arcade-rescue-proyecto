@@ -16,7 +16,9 @@ option(ARCADE_RESCUE_FETCH_RAYLIB "Descargar raylib con FetchContent si no esta 
 option(ARCADE_RESCUE_WERROR "Tratar los warnings del compilador como errores" OFF)
 option(ARCADE_RESCUE_SANITIZERS "Activar AddressSanitizer/UBSan (GCC/Clang)" OFF)
 
-set(CMAKE_CXX_STANDARD 14)
+# ---- Cambio de version ----
+set(CMAKE_CXX_STANDARD 17)
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -120,6 +122,10 @@ target_compile_definitions(arcade_rescue PRIVATE
 if(ARCADE_RESCUE_RAYLIB_AVAILABLE)
   target_link_libraries(arcade_rescue PRIVATE raylib)
 endif()
+
+# --- Pruebas -----------------------------------------------------------------
+enable_testing()
+add_subdirectory(tests)
 
 # --- Instalacion / empaquetado ---------------------------------------------
 include(GNUInstallDirs)
