@@ -24,7 +24,7 @@ bool isRegularFile(const fs::path& path) {
   return fs::is_regular_file(path, error);
 }
 
-}  // namespace
+} // namespace
 
 std::string executableDirectory() {
 #if defined(_WIN32)
@@ -50,7 +50,9 @@ std::string executableDirectory() {
   if (length <= 0) {
     return {};
   }
-  return fs::path(std::string(buffer.data(), static_cast<std::size_t>(length))).parent_path().string();
+  return fs::path(std::string(buffer.data(), static_cast<std::size_t>(length)))
+      .parent_path()
+      .string();
 #endif
 }
 
@@ -59,13 +61,12 @@ std::string findAsset(const std::string& relativePath, const std::string& explic
     return {};
   }
 
-  const fs::path candidate = explicitDirectory.empty()
-                                 ? fs::path("assets") / relativePath
-                                 : fs::path(explicitDirectory) / relativePath;
+  const fs::path candidate = explicitDirectory.empty() ? fs::path("assets") / relativePath
+                                                       : fs::path(explicitDirectory) / relativePath;
   if (isRegularFile(candidate)) {
     return candidate.string();
   }
   return {};
 }
 
-}  // namespace arcade
+} // namespace arcade

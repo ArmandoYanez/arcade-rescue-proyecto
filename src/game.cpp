@@ -159,4 +159,4 @@ void Game::updateHighScore() {
   }
 }
 
-}  // namespace arcade
+} // namespace arcade
