@@ -5,8 +5,8 @@
 #include <stdexcept>
 #include <vector>
 
-#include "rng.hpp"
-#include "types.hpp"
+#include "arcade/rng.hpp"
+#include "arcade/types.hpp"
 
 namespace arcade {
 

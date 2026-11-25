@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game.hpp"
+#include "arcade/game.hpp"
 
 namespace arcade {
 
