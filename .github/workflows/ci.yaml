@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  lint:
+    name: Format & Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format
+
+      - name: Check formatting (clang-format)
+        run: |
+          find src include tests -type f \( -name "*.cpp" -o -name "*.hpp" \) \
+            -exec clang-format --dry-run --Werror {} +
+
+  build-test:
+    name: Build & Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: arcade-rescue-linux
+            exe_ext: ""
+          # Descomentar cuando Ubuntu pase en verde:
+          # - os: windows-latest
+          #   artifact_name: arcade-rescue-windows
+          #   exe_ext: ".exe"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Linux dependencies for raylib
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libx11-dev libxrandr-dev libxinerama-dev \
+            libxcursor-dev libxi-dev libgl1-mesa-dev
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Run unit tests
+        run: ctest --test-dir build -C Release --output-on-failure
+
+      - name: Install (package to dist/)
+        run: cmake --install build --config Release --prefix dist
+
+      - name: Smoke test (headless)
+        shell: bash
+        run: ./dist/bin/arcade_rescue${{ matrix.exe_ext }} --headless --ticks 300 --seed 7
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/
+          if-no-files-found: error
