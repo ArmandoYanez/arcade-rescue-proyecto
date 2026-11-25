@@ -1,3 +1,37 @@
-# Binarios
+# Binarios y objetos
 *.exe
 *.o
+*.obj
+*.pdb
+*.ilk
+*.a
+*.lib
+*.so
+*.dll
+
+# Carpetas generadas por CMake / empaquetado (nunca se versionan)
+build/
+build-*/
+cmake-build-*/
+dist/
+out/
+_CPack_Packages/
+
+# Paquetes de release
+*.zip
+*.tar.gz
+
+# IDEs y editores
+.vs/
+.vscode/
+.idea/
+CMakeUserPresets.json
+
+# Sistema operativo
+Thumbs.db
+.DS_Store
+
+# Secretos y configuracion local
+.env
+*.pem
+*.key
