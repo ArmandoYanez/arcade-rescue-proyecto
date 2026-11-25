@@ -152,10 +152,11 @@ void AutoPilot::steer(Game& game) {
     if (!inside(config, next)) {
       continue;
     }
-    const int area=reachableArea( config ,blocked, next );
-      if(area>bestArea){
-     bestArea=area; best=direction;
-   }
+    const int area = reachableArea(config, blocked, next);
+    if (area > bestArea) {
+      bestArea = area;
+      best = direction;
+    }
   }
 
   if (bestArea > 0 && best != game.direction()) {
