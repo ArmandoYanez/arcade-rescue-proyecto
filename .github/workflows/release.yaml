@@ -1,0 +1,45 @@
+#This YAML creates a Release of the Dockerfile for Windows and Linux
+name: Upload Release
+
+on:
+  push:
+    branches: [mia/artifacts]
+
+#on: 
+  #push:
+    #tags:
+      #- "v*"
+  
+permissions:
+  contents: read
+
+jobs:
+  Build-Artifacts:
+    name: Build Artifacts for Windows and Linux
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            dockerfile: Dockerfile
+
+          - os: windows-latest
+            dockerfile: Dockerfile.windows
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Download Repository
+        uses: actions/checkout@v4
+
+      - name: Build Image
+        run: docker build -f ${{ matrix.dockerfile }} -t arcade-rescue:latest .
+
+      - name: Export Image
+        run: docker save arcade-rescue:latest -o arcade-rescue.tar
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: arcade-rescue-${{ matrix.os }}
+          path: arcade-rescue.tar
+          if-no-files-found: error
