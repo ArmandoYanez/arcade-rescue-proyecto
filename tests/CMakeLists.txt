@@ -1,4 +1,5 @@
 add_executable(arcade_rescue_tests
+  test_game.cpp
   test_main.cpp
   test_smoke.cpp)
 
